@@ -1,19 +1,22 @@
 {
-  "name": "chatserver",
+  "name": "angular",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {},
   "scripts": {
-    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.14.0",
-    "jshint": "^2.9.3"
+  "dependencies":{
+    "jshint":"^2.9.3"  
   },
   "devDependencies": {
+    "browser-sync": "^2.14.3",
     "gulp": "^3.9.1",
     "gulp-inject": "^4.1.0",
     "gulp-jscs": "^4.0.0",

@@ -38,7 +38,7 @@ bower_components
 .node_repl_histor
 
 #bower modules
-public/lib/*
+bower_components/
 
 #mac os
 .DS_Store
