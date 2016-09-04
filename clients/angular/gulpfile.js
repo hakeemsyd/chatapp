@@ -1,9 +1,12 @@
+'use strict';
+
+/* jshint node: true */
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var nodemon = require('gulp-nodemon');
 
-var jsFiles = ['app.js', 'app/components/**/*.js'];
+var jsFiles = ['start.js','gulpfile.js', 'app/components/**/*.js'];
 
 gulp.task('style', function(){
    return gulp.src(jsFiles)
@@ -18,7 +21,7 @@ gulp.task('inject', function(){
    var wiredep = require('wiredep').stream;
    var inject = require('gulp-inject');
 
-   var injectSrc = gulp.src(['./app/assets/css/*.css', './app/components/**/*.js'],{read: false});
+   var injectSrc = gulp.src(['./app/assets/css/*.css', './app/components/*.js'],{read: false});
    var injectOptions = {
      ignorePath: 'app/',
      addRootSlash: false
@@ -37,7 +40,7 @@ gulp.task('inject', function(){
 
 gulp.task('serve', ['style', 'inject'], function(){
     var options = {
-        script: 'app/app.js',
+        script: 'start.js',
         delayTime: 1,
         env: {
             'PORT': 3000

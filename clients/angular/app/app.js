@@ -1,16 +1,11 @@
-var express = require('express');
-var app = express();
+'use strict'
 
-var port = process.env.PORT || 5000;
-app.use(express.static('css'));
-app.use(express.static('lib'));
-app.use(express.static('views'));
+//Declare app level modle which depends on views, and components
+angular.module('chatClient', [
+   'ngRoute'
+]).
+config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider){
+  $locationProvider.hashPrefix('!');
 
-app.get('/', function(req, res){
-    res.send('Hello World');
-});
-
-app.listen(port, function(err){
-    console.log('running server on port ' + port);
-});
-
+  $routeProvider.otherwise({redirectTo: 'index.html'});
+}]);
