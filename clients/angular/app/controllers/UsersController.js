@@ -1,5 +1,6 @@
 'use strict';
 chatApp.controller('UsersController',
-  function($scope){
+  function($scope, Client){
+    $scope.users = Client.users;
   }
 );

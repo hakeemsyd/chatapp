@@ -6,7 +6,7 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var nodemon = require('gulp-nodemon');
 
-var jsFiles = ['start.js','gulpfile.js','app/app.js', 'app/controllers/*.js'];
+var jsFiles = ['start.js','gulpfile.js','app/app.js','app/services/*.js', 'app/controllers/*.js'];
 
 gulp.task('style', function(){
    return gulp.src(jsFiles)
@@ -21,7 +21,7 @@ gulp.task('inject', function(){
    var wiredep = require('wiredep').stream;
    var inject = require('gulp-inject');
 
-   var injectSrc = gulp.src(['./app/assets/css/*.css', './app/app.js', './app/controllers/*.js'],{read: false});
+   var injectSrc = gulp.src(['./app/assets/css/*.css', './app/app.js','./app/services/*.js', './app/controllers/*.js'],{read: false});
    var injectOptions = {
      ignorePath: 'app/',
      addRootSlash: false

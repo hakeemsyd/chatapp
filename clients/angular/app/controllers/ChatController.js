@@ -1,6 +1,6 @@
 'use strict';
 chatApp.controller('ChatController',
-  function ChatController($scope){
-     $scope.message = "Hello from ChatController";
+  function ChatController($scope, Client){
+     $scope.messages = Client.messages;
   }
 );
