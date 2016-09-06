@@ -1,0 +1,91 @@
+doctype html(xmlns='http://www.w3.org/1999/xhtml')
+head
+    meta(charset='utf-8')
+    |     
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    |     
+    meta(name='description', content='')
+    |     
+    meta(name='author', content='')
+    //if IE
+      meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+    |     
+    title ChatApp
+    // BOOTSTRAP CORE STYLE CSS
+
+    //- bower:js
+    script(src='bower_components/jquery/dist/jquery.js')
+    script(src='bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src='bower_components/angular/angular.js')
+    script(src='bower_components/angular-route/angular-route.js')
+    //- endbower
+
+    //- inject:js
+    script(src="app.js")
+    script(src="controllers/ChatController.js")
+    script(src="controllers/UsersController.js")
+    //- endinject
+    
+    //- inject:css
+    //- endinject
+    
+    //- bower:css
+    link(rel='stylesheet', href='bower_components/bootstrap/dist/css/bootstrap.css')
+    //- endbower
+    
+
+ body(style='font-family:Verdana')
+   div(ng-app="chatApp")
+     div(style='padding-top:40px;', ng-controller="ChatController")
+       h3.text-center Chat Application Angular Client
+        |     
+        br
+        br
+        |     
+        .col-md-8
+          .panel.panel-info
+            .panel-heading
+              | RECENT CHAT HISTORY
+              |             
+              ul.media-list
+                li.media
+                  .media-body
+                    .media
+                      a.pull-left(href='#')
+                        img.media-object.img-circle(src='assets/img/user.png')
+                      |                                                 
+                      .media-body
+                        |{{message}} 
+                        br
+                        |                                                    
+                        small.text-muted Alex Deo | 23rd June at 5:00pm
+                        |                                                     
+                        hr
+                |      
+            .panel-footer
+              .input-group
+                input.form-control(type='text', placeholder='Enter Message')
+                |                                     
+                span.input-group-btn
+                  button.btn.btn-info(type='button') SEND
+        |     
+        .col-md-4(ng-controller="UsersController")
+          .panel.panel-primary
+            .panel-heading
+              | ONLINE USERS
+            |             
+            .panel-body
+              ul.media-list
+                li.media
+                  .media-body
+                    .media
+                      a.pull-left(href='#')
+                        img.media-object.img-circle(style='max-height:40px;', src='assets/img/user.png')
+                      |                                                 
+                      .media-body
+                        h5 Alex Deo | User 
+                        |                                                     
+                        |                                                    
+                        small.text-muted Active From 3 hours
+                |      
+

@@ -1,11 +1,6 @@
-'use strict'
-
+'use strict';
+/* jshint -W079 */
 //Declare app level modle which depends on views, and components
-angular.module('chatClient', [
+var chatApp = angular.module('chatApp', [
    'ngRoute'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider){
-  $locationProvider.hashPrefix('!');
-
-  $routeProvider.otherwise({redirectTo: 'index.html'});
-}]);
+]);

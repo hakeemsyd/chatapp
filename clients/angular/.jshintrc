@@ -3,6 +3,7 @@
    "globals": {
     // Angular
     "angular": false,
+    "chatApp":false,
 
     // Angular mocks
     "module": false,
