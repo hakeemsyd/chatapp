@@ -18,7 +18,7 @@ head
     script(src='bower_components/bootstrap/dist/js/bootstrap.js')
     script(src='bower_components/angular/angular.js')
     script(src='bower_components/angular-route/angular-route.js')
-    script(src='bower_components/angular-websocket/dist/angular-websocket.js')
+    script(src='bower_components/ngSocket/dist/ngSocket.js')
     //- endbower
 
     //- inject:js
@@ -57,19 +57,19 @@ head
                         img.media-object.img-circle(src='assets/img/user.png')
                       |                                                 
                       .media-body
-                        |{{message}} 
+                        |{{message.data}} 
                         br
                         |                                                    
-                        small.text-muted Alex Deo | 23rd June at 5:00pm
+                        small.text-muted Alex Deo | {{message.timeStamp}}
                         |                                                     
                         hr
                 |      
             .panel-footer
               .input-group
-                input.form-control(type='text', placeholder='Enter Message')
+                input.form-control(type='text', placeholder='Enter Message', ng-model="textMessage")
                 |                                     
                 span.input-group-btn
-                  button.btn.btn-info(type='button') SEND
+                  button.btn.btn-info(type='button' ng-click="send()") SEND
         |     
         .col-md-4(ng-controller="UsersController")
           .panel.panel-primary
