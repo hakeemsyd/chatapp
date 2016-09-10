@@ -42,3 +42,6 @@ bower_components/
 
 #mac os
 .DS_Store
+
+#output
+dist/

@@ -4,7 +4,9 @@
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
-var nodemon = require('gulp-nodemon');
+var browserSync = require('browser-sync').create();
+var jade = require('gulp-jade');
+var bowerFiles = require('main-bower-files');
 
 var jsFiles = ['start.js','gulpfile.js','app/app.js','app/services/*.js', 'app/controllers/*.js'];
 
@@ -38,18 +40,39 @@ gulp.task('inject', function(){
         .pipe(gulp.dest('./app'));
 });
 
-gulp.task('serve', ['style', 'inject'], function(){
-    var options = {
-        script: 'start.js',
-        delayTime: 1,
-        env: {
-            'PORT': 3000
-        },
-        watch: jsFiles
-    };
+gulp.task('lib', function(){
+  return gulp.src(bowerFiles(),{ base: './app/bower_components'})
+    .pipe(gulp.dest('./dist/bower_components'));
+});
 
-    return nodemon(options)
-        .on('restart', function(ev){
-            console.log('Restarting....');
-        }); 
+gulp.task('js', function(){
+  return gulp.src(['./app/**/*.js', '!bower_components/*'])
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('css', function(){
+  return gulp.src('./app/assets/**')
+    .pipe(gulp.dest('./dist/assets'));
+});
+
+gulp.task('template', function(){
+  var YOUR_LOCALS = {};
+ 
+  return gulp.src('./app/**/*.jade')
+    .pipe(jade({
+        locals: YOUR_LOCALS
+    }))
+    .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('jade-watch', ['style', 'inject', 'js', 'lib', 'css', 'template'], browserSync.reload);
+
+
+gulp.task('serve', ['style', 'inject','js', 'lib', 'css', 'template'], function(){
+  browserSync.init({
+    server:{
+      baseDir: './dist'
+    }
+  });
+  gulp.watch(['start.js','gulpfile.js','app/app.js','app/services/*.js', 'app/controllers/*.js', './app/**/*.jade'], ['jade-watch']);
 });
