@@ -8,7 +8,7 @@ var browserSync = require('browser-sync').create();
 var jade = require('gulp-jade');
 var bowerFiles = require('main-bower-files');
 
-var jsFiles = ['start.js','gulpfile.js','app/app.js','app/services/*.js', 'app/controllers/*.js'];
+var jsFiles = ['gulpfile.js','app/app.js','app/services/*.js', 'app/controllers/*.js'];
 
 gulp.task('style', function(){
    return gulp.src(jsFiles)
@@ -74,5 +74,5 @@ gulp.task('serve', ['style', 'inject','js', 'lib', 'css', 'template'], function(
       baseDir: './dist'
     }
   });
-  gulp.watch(['start.js','gulpfile.js','app/app.js','app/services/*.js', 'app/controllers/*.js', './app/**/*.jade'], ['jade-watch']);
+  gulp.watch(['gulpfile.js','app/app.js','app/services/*.js', 'app/controllers/*.js', './app/**/*.jade'], ['jade-watch']);
 });
