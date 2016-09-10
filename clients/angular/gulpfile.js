@@ -6,6 +6,7 @@ var jshint = require('gulp-jshint');
 var jscs = require('gulp-jscs');
 var browserSync = require('browser-sync').create();
 var jade = require('gulp-jade');
+var bowerFiles = require('main-bower-files');
 
 var jsFiles = ['start.js','gulpfile.js','app/app.js','app/services/*.js', 'app/controllers/*.js'];
 
@@ -39,19 +40,19 @@ gulp.task('inject', function(){
         .pipe(gulp.dest('./app'));
 });
 
-gulp.task('js', function(){
-  return gulp.src('./app/**/*.js')
-    .pipe(gulp.dest('./dist/'));
+gulp.task('lib', function(){
+  return gulp.src(bowerFiles(),{ base: './app/bower_components'})
+    .pipe(gulp.dest('./dist/bower_components'));
 });
 
-gulp.task('lib', function(){
-  return gulp.src('./app/bower_components/')
-    .pipe(gulp.dest('./dest/bower_components/'));
+gulp.task('js', function(){
+  return gulp.src(['./app/**/*.js', '!bower_components/*'])
+    .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('css', function(){
-  return gulp.src('./app/assets/')
-    .pipe(gulp.dest('./dist/'));
+  return gulp.src('./app/assets/**')
+    .pipe(gulp.dest('./dist/assets'));
 });
 
 gulp.task('template', function(){
@@ -59,18 +60,19 @@ gulp.task('template', function(){
  
   return gulp.src('./app/**/*.jade')
     .pipe(jade({
-        locals: jsFiles
+        locals: YOUR_LOCALS
     }))
     .pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('jade-watch', ['style', 'inject', 'js', 'lib', 'css', 'template'], browserSync.reload);
 
-gulp.task('browser-sync', ['style', 'inject','js', 'lib', 'css', 'template'], function(){
+
+gulp.task('serve', ['style', 'inject','js', 'lib', 'css', 'template'], function(){
   browserSync.init({
     server:{
       baseDir: './dist'
     }
   });
-  gulp.watch('./app/*.jade', ['jade-watch']);
+  gulp.watch(['start.js','gulpfile.js','app/app.js','app/services/*.js', 'app/controllers/*.js', './app/**/*.jade'], ['jade-watch']);
 });
