@@ -1,16 +1,19 @@
 'use strict';
 chatApp.controller('ChatController',
-  function ChatController($scope, Client){
+  function ChatController($scope, Client, $socket){
     $scope.messages = [];
     $scope.textMessage = "";
+    $scope.count = Client.count;
 
-    Client.ws().onMessage(function(m){
-      $scope.messages.push({user:Client.user(), message:m.data});
+    $scope.messages.push({type:'log', log:'there are ' + Client.getCount() + ' people'});
+
+    $socket.on('new message', function(data){
+      $scope.messages.push(data);
     });
 
     $scope.send = function(){
       if($scope.textMessage !== ""){
-        Client.ws().send($scope.textMessage);
+        $socket.emit('new message', $scope.textMessage);
         $scope.textMessage = "";
       }
     };

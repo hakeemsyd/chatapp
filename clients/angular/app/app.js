@@ -6,17 +6,19 @@ var chatApp = angular.module('chatApp', [
   'ngSocket'
 ]);
 
-chatApp.config(function($routeProvider){
+chatApp.config(function($routeProvider, $socketProvider){
   $routeProvider.when('/',{
     templateUrl: 'views/login.html',
     controller: 'UsersController'
   })
-    .when('/chat', {
-      templateUrl: 'views/chatpage.html',
-      controller: 'ChatController'
-    }).
-    otherwise({
-      redirectTo: '/'
-    });
-}
-);
+  .when('/chat', {
+    templateUrl: 'views/chatpage.html',
+    controller: 'ChatController'
+  }).
+  otherwise({
+    redirectTo: '/'
+  });
+
+  $socketProvider.setUrl('http://localhost:5000');
+});
+

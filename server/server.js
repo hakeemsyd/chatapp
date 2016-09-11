@@ -1,29 +1,70 @@
-var ws = require('nodejs-websocket');
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var port = process.env.PORT || 5000;
 
-var server = ws.createServer(function(conn){
-  console.log('New Connection');
- // console.log(this.socket.getConnections());
+server.listen(port, function(){
+  console.log('Server listening at port %d', port);
+});
 
-  conn.on("connect", function(){
-    conn.message("Hello form server");
+app.use(express.static('../client/angular/dist'));
+
+var numUsers = 0;
+
+io.on('connection', function(socket){
+  console.log('new client connected');
+  var addedUser = false;
+
+  socket.on('new message', function(data){
+    console.log('new messge: ' + data + ', from: ' + socket.username);
+    socket.broadcast.emit('new message', {
+      username: socket.username,
+      message: data
+    });
   });
 
-  conn.on("text", function(m){
-    var obj = JSON.parse(m);
-    console.log(obj);
-    console.log("Received: " + obj.message + ", from: " + obj.name);
-    //conn.sendText('Message recieved');
-    broadcast( obj.message, conn);
+  socket.on('add user', function(username){
+    console.log('add user: ' + username);
+    if(addedUser) return;
+
+    socket.username = username;
+    ++numUsers;
+    addedUser = true;
+
+    socket.emit('login', { numUsers: numUsers});
+
+    socket.broadcast.emit('user joined', {
+      username: socket.username,
+      numUsers: numUsers
+    });
+
   });
 
-  conn.on("close", function(code, reason){
-    console.log("Connection closed");
+  socket.on('typing', function(){
+    console.log('typing: ' + socket.username);
+    socket.broadcast.emit('typing', {
+      username: socket.username
+    });
   });
 
-}).listen(5000);
-
-function broadcast(m){
-  server.connections.forEach(function(conn){
-      conn.sendText(m);
+  socket.on('stop typing', function(){
+    console.log('stop typing: ' + socket.username);
+    socket.broadcast.emit('stop typing', {
+      username: socket.username
+    });
   });
-};
+
+  socket.on('disconnect', function(){
+    console.log('disconnect: ' + socket.username);
+
+    if(addedUser){
+      --numUsers;
+
+      socket.broadcast.emit('user left', {
+        username: socket.username,
+        numUsers: numUsers
+      });
+    }
+  });
+});

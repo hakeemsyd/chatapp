@@ -4,7 +4,10 @@ div
         li.log
           |Welcome to chatApp
         li.message(ng-repeat="m in messages")
-          span.username {{m.user}}
-          span.messageBody {{m.message}}
-    form(ng-submit="send()")
-      input.inputMessage(placeholder='Type here...', ng-model="textMessage")
+          div(ng-if="m.type == 'message'")
+            span.username {{m.username}}
+            span.messageBody {{m.message}} form(ng-submit="send()")
+          div(ng-if="m.type == 'log'")
+            span.log(style='display: list-item;') {{m.log}}
+      form(ng-submit="send()")
+        input.inputMessage(placeholder='Type here...', ng-model="textMessage")
