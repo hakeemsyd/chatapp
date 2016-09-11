@@ -1,0 +1,9 @@
+div
+    chatArea
+      ul.messages
+        li.log
+          |Welcome to chatApp
+        li.message(ng-repeat="m in messages")
+          |{{m}}
+    form(ng-submit="send()")
+      input.inputMessage(placeholder='Type here...', ng-model="textMessage")
