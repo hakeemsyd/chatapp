@@ -4,6 +4,7 @@ div
         li.log
           |Welcome to chatApp
         li.message(ng-repeat="m in messages")
-          |{{m}}
+          span.username {{m.user}}
+          span.messageBody {{m.message}}
     form(ng-submit="send()")
       input.inputMessage(placeholder='Type here...', ng-model="textMessage")

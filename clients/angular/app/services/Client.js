@@ -1,7 +1,7 @@
 'use strict';
 chatApp.factory('Client',
   function(ngSocket){
-    var username = "";
+    var username = "chuss";
     var ws = ngSocket('ws://localhost:5000');
     //ws.send("Hello from client");
 
@@ -11,6 +11,9 @@ chatApp.factory('Client',
       },
       setUsername: function(user){
         username = user;
+      },
+      user: function(){
+        return username;
       }
     };
   }
