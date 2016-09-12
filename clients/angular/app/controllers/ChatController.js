@@ -17,6 +17,12 @@ chatApp.controller('ChatController',
       $scope.messages.push({type:'log', log: 'there are ' + Client.getCount() + ' people'});
     });
 
+    $socket.on('user left', function(data){
+      Client.setUserCount(data.numUsers);
+      $scope.messages.push({type:'log', log: data.username + ' just left'});
+      $scope.messages.push({type:'log', log: 'there are ' + Client.getCount() + ' people'});
+    });
+
     $socket.on('disconnected', function(){
       $location.url('/');
     });
