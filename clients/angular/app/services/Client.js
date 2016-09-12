@@ -1,8 +1,8 @@
 'use strict';
 chatApp.factory('Client',
   function($socket){
-    var username = "chuss";
-    var count = 0;
+    this.username = "chuss";
+    this.count = 0;
 
     var that = this;
     return {
@@ -10,7 +10,7 @@ chatApp.factory('Client',
         that.username = user;
       },
       user: function(){
-        return username;
+        return that.username;
       },
       setUserCount: function(c){
        that.count = c;

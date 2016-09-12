@@ -70,6 +70,7 @@ gulp.task('jade-watch', ['style', 'inject', 'js', 'lib', 'css', 'template'], bro
 
 gulp.task('serve', ['style', 'inject','js', 'lib', 'css', 'template'], function(){
   browserSync.init({
+    ghostMode: false,
     server:{
       baseDir: './dist'
     }

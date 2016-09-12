@@ -13,7 +13,8 @@ chatApp.config(function($routeProvider, $socketProvider){
   })
   .when('/chat', {
     templateUrl: 'views/chatpage.html',
-    controller: 'ChatController'
+    controller: 'ChatController',
+    reloadOnSearch: false
   }).
   otherwise({
     redirectTo: '/'
