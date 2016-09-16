@@ -20,6 +20,7 @@ chatApp.config(function($routeProvider, $socketProvider){
     redirectTo: '/'
   });
 
-  $socketProvider.setUrl('http://localhost:5000');
+  //$socketProvider.setUrl('http://localhost:5000');
+  $socketProvider.setUrl('https://chussapp.herokuapp.com');
 });
 
